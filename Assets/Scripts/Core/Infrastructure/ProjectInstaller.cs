@@ -1,8 +1,4 @@
 using Core.Loaders.Scene;
-using Cysharp.Threading.Tasks;
-using Tools.Constants;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Core.Infrastructure {
