@@ -1,18 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using UnityEngine.AddressableAssets;
 
-public class SceneLoader : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+namespace Core.Loaders.Scene {
+  public class SceneLoader : ISceneLoader {
+    public async UniTask LoadSceneAsync(string sceneKey) {
+      var handle = Addressables.LoadSceneAsync(sceneKey);
+      await handle.ToUniTask();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  }
 }
