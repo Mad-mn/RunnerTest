@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4836681722047991394}
+  - component: {fileID: 3331742254033935226}
   - component: {fileID: 5037751927871261947}
   - component: {fileID: 5791196266819317836}
   - component: {fileID: 6209308421631592741}
@@ -35,6 +36,19 @@ Transform:
   - {fileID: 1705949225694287223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3331742254033935226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763501383640774928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1ad63768061944fb3ec22d351564a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _movementController: {fileID: 5037751927871261947}
 --- !u!114 &5037751927871261947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,9 +62,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 6209308421631592741}
-  _forwardSpeed: 15
-  _laneDistance: 3
-  _laneChangeSpeed: 0.1
   _animationController: {fileID: 5791196266819317836}
 --- !u!114 &5791196266819317836
 MonoBehaviour:

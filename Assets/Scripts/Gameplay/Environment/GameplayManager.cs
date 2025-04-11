@@ -30,6 +30,7 @@ namespace Gameplay.Environment {
 
     private RoadCreator _roadCreator;
     private readonly List<RoadItem> _roadItems = new List<RoadItem>();
+    private PlayerController _playerController;
 
     private void Awake() {
       _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
@@ -68,8 +69,8 @@ namespace Gameplay.Environment {
 
       GameObject playerPrefab = await Addressables.LoadAssetAsync<GameObject>(_playerConfig.PlayerPrefabPath);
       GameObject player = Instantiate(playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
-      PlayerMovementController playerMovementController = player.GetComponent<PlayerMovementController>();
-      playerMovementController.SetupData(new PlayerMovementData {
+      _playerController = player.GetComponent<PlayerController>();
+      _playerController.Initialize(new PlayerMovementData {
         ChangeSideSpeed = _playerConfig.ChangeSideSpeed,
         Speed = _playerConfig.RunSpeed,
         SideWight = 2
