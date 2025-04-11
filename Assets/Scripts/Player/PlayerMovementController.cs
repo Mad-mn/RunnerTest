@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player {
@@ -5,21 +6,28 @@ namespace Player {
     [SerializeField]
     private CharacterController _characterController;
     [SerializeField]
-    private float _forwardSpeed = 5f;
-    [SerializeField]
-    private float _laneDistance = 2f;
-    [SerializeField]
-    private float _laneChangeSpeed = 10f;
+    private PlayerAnimationController _animationController;
+
+    private float _speed;
+    private float _sideWight;
+    private float _changeSideSpeed;
 
     private Vector3 _moveDirection;
     private int _currentLane  ;
 
     private bool _start;
 
+    public void SetupData(PlayerMovementData movementData) {
+      _speed = movementData.Speed;
+      _changeSideSpeed = movementData.ChangeSideSpeed;
+      _sideWight = movementData.SideWight;
+    }
+
     private void Update() {
 
       if (Input.GetKeyDown(KeyCode.W)) {
         _start = true;
+        _animationController.StartRunAnimation();
       }
 
       if (!_start) {
@@ -36,14 +44,21 @@ namespace Player {
         }
       }
 
-      float targetX = _currentLane * _laneDistance;
-      float newX = Mathf.MoveTowards(transform.position.x, targetX, _laneChangeSpeed);
+      float targetX = _currentLane * _sideWight;
+      float newX = Mathf.MoveTowards(transform.position.x, targetX, _changeSideSpeed);
       float xMovement = newX - transform.position.x;
-      float zMovement = _forwardSpeed * Time.deltaTime;
+      float zMovement = _speed * Time.deltaTime;
 
       _moveDirection = new Vector3(xMovement, 0, zMovement);
       _characterController.Move(_moveDirection);
     }
 
+  }
+
+  [Serializable]
+  public struct PlayerMovementData {
+    public float Speed;
+    public float ChangeSideSpeed;
+    public float SideWight;
   }
 }
