@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5244643954310777331}
   - component: {fileID: 6377704233377465690}
+  - component: {fileID: 4075183360119287339}
   m_Layer: 0
   m_Name: RoadItem
   m_TagString: Untagged
@@ -49,6 +50,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enterPosition: {fileID: 8746398876820983062}
   _exitPosition: {fileID: 5308929169546985245}
+--- !u!65 &4075183360119287339
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975873985991212123}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.412056, y: 1, z: 25.940409}
+  m_Center: {x: -0.05875206, y: 1, z: 4.2977285}
 --- !u!1 &4380162292386009094
 GameObject:
   m_ObjectHideFlags: 0
