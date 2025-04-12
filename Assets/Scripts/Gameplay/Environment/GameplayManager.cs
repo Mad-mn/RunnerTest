@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Camera;
 using Configs;
 using Configs.PlayerConfigs;
+using Configs.RoadConfigs;
 using Core.ObjectPool;
 using Cysharp.Threading.Tasks;
 using Environment.Road;
@@ -42,9 +43,11 @@ namespace Gameplay.Environment {
     }
 
     private void InitializeStartedEnvironment() {
-      for (int i = 0; i < 3; i++) {
+      int startAmount = _configManager.GetConfig<RoadConfig>().RoadConfigData.StartAmount;
+      for (int i = 0; i < startAmount; i++) {
         RoadItem newRoad = _roadCreator.SpawnRoadItem(i == 0 ? _startRoadSpawnPoint.position : _roadItems[^1].ExitPosition);
         newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
+        newRoad.SetupEnvironment(i != 0);
         _roadItems.Add(newRoad);
       }
     }
@@ -61,6 +64,7 @@ namespace Gameplay.Environment {
       _objectPoolManager.ReturnToPool(oldRoad);
       RoadItem newRoad = _roadCreator.SpawnRoadItem( _roadItems[^1].ExitPosition);
       newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
+      newRoad.SetupEnvironment(true);
       _roadItems.Add(newRoad);
     }
 
@@ -73,7 +77,7 @@ namespace Gameplay.Environment {
       _playerController.Initialize(new PlayerMovementData {
         ChangeSideSpeed = _playerConfig.ChangeSideSpeed,
         Speed = _playerConfig.RunSpeed,
-        SideWight = 2
+        SideWight = 3
       });
       player.transform.position = _playerSpawnPoint.position;
       _cameraController.SetupTarget(player.transform, _playerConfig.CameraOffset);

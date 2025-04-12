@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3dad57838b0474481103f0efc9313e, type: 3}
+  m_Name: RoadConfig
+  m_EditorClassIdentifier: 
+  _roadConfigData:
+    StartAmount: 5
+    SpawnOutsideChanceMax: 0.8
+    SpawnOutsideChanceMin: 0.3
+    OutsideItems:
+    - {fileID: -8433946638987586311, guid: 77c7a59b281dfb54da2a3fb160db7bd8, type: 3}
+    - {fileID: -9223249003784901001, guid: 96a9c52d97bb5fc4f866e962b81362b5, type: 3}
+    - {fileID: 8426532483075709774, guid: c5a29311a3661e64789814dcaeea13a4, type: 3}
+    - {fileID: 4447357851566407185, guid: 5f6d7e9739216d64aa417075533e1043, type: 3}
+    - {fileID: -7848644237381767519, guid: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b, type: 3}
+    SpawnObstacleChanceMax: 0.5
+    SpawnObstacleChanceMin: 0.1
+    Obstacle: {fileID: -7433744346076918379, guid: c40453d00513d574b86198b76945957b, type: 3}
+    SpawnRewardChanceMax: 0.5
+    SpawnRewardChanceMin: 0.1
+    RewardItems:
+    - {fileID: -3896921571673977411, guid: f10a8ee42dbcef84e8686022710f8bb1, type: 3}
+    - {fileID: 3770422590498588912, guid: 6c32918a76b1ebc4c998cf8c02fe6f65, type: 3}
+    - {fileID: -6195160868496707624, guid: b08e7dba024395c49ac3f69b0e1b8a6a, type: 3}

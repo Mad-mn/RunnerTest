@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerConfigData:
     PlayerPrefabPath: Prefabs/Player/Player.prefab
-    CameraOffset: {x: 0, y: 15, z: -8}
+    CameraOffset: {x: 0, y: 21, z: -14}
     RunSpeed: 15
     ChangeSideSpeed: 0.2

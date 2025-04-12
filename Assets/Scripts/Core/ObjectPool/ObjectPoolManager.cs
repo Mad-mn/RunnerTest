@@ -38,6 +38,18 @@ namespace Core.ObjectPool {
       return default;
     }
 
+    public T GetFromPool<T>(Type objType) where T : MonoBehaviour, IPoolable {
+      PoolItem poolItem = _poolItems.Find(item => item.Type == objType && item.PollPoolable.InPool);
+      if (poolItem != null) {
+        poolItem.PollPoolable.OnGetFromPool();
+        return poolItem.PollPoolable as T;
+      }
+
+      Debug.LogError($"Pool item with type {objType} exist.");
+
+      return default;
+    }
+
     public void ReturnToPool<T>(T returnedObject) where T : MonoBehaviour, IPoolable {
       PoolItem poolableItem = _poolItems.Find(item => item.GameObject == returnedObject.gameObject);
       poolableItem.PollPoolable.OnSetToPool();
@@ -47,16 +59,21 @@ namespace Core.ObjectPool {
     private async UniTask InitializeItems() {
       foreach (PoolPrefabItem poolPrefabItem in _basePoolConfig.Prefabs) {
         for (int i = 0; i < poolPrefabItem.SpawnAmount; i++) {
-          GameObject item = Object.Instantiate(poolPrefabItem.Prefab, _poolContainer, true);
-          PoolItem poolItem = new PoolItem();
-          poolItem.GameObject = item;
-          poolItem.PollPoolable = item.GetComponent<IPoolable>();
-          poolItem.PollPoolable.Initialize();
-          _poolItems.Add(poolItem);
+          CreateItem(poolPrefabItem.Prefab);
         }
 
         await UniTask.NextFrame();
       }
+    }
+
+    private void CreateItem(GameObject prefab) {
+      GameObject item = Object.Instantiate(prefab, _poolContainer, true);
+      PoolItem poolItem = new PoolItem();
+      poolItem.GameObject = item;
+      poolItem.PollPoolable = item.GetComponent<IPoolable>();
+      poolItem.Type = poolItem.PollPoolable.GetType();
+      poolItem.PollPoolable.Initialize();
+      _poolItems.Add(poolItem);
     }
   }
 
@@ -64,5 +81,6 @@ namespace Core.ObjectPool {
   public class PoolItem {
     public GameObject GameObject;
     public IPoolable PollPoolable;
+    public Type Type;
   }
 }
