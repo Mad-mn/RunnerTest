@@ -25,10 +25,9 @@ namespace Core.Managers.UI {
       await InitializeWindows();
     }
 
-    public T ShowWindow<T>() where T : BaseUIWindow {
+    public T GetWindow<T>() where T : BaseUIWindow {
       BaseUIWindow window = _windows.FirstOrDefault(window => window.GetType() == typeof(T));
       if (window != default) {
-        window.Show();
         return window as T;
       }
 
@@ -36,14 +35,15 @@ namespace Core.Managers.UI {
       return null;
     }
 
-    public void HideWindow<T>() where T : BaseUIWindow {
-      BaseUIWindow window = _windows.FirstOrDefault(window => window.GetType() == typeof(T));
-      if (window != default) {
-        window.Hide();
-        return;
-      }
+    public T ShowWindow<T>() where T : BaseUIWindow {
+      BaseUIWindow window = GetWindow<T>();
+      window.Show();
+      return (T) window;
+    }
 
-      Debug.LogError($"Window {typeof(T)} exist");
+    public void HideWindow<T>() where T : BaseUIWindow {
+      BaseUIWindow window = GetWindow<T>();
+      window.Hide();
     }
 
     private async UniTask CreateRoot() {

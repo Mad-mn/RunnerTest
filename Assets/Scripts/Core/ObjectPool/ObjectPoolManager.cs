@@ -71,7 +71,7 @@ namespace Core.ObjectPool {
 
     public void ReturnToPool<T>(T returnedObject) where T : MonoBehaviour, IPoolable {
       PoolItem poolableItem = _poolItems.Find(item => item.GameObject == returnedObject.gameObject);
-      poolableItem.PollPoolable.OnSetToPool();
+      poolableItem.PollPoolable.ReturnToPool();
       poolableItem.GameObject.transform.SetParent(_poolContainer);
     }
 

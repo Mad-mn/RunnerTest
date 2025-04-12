@@ -5,7 +5,7 @@ namespace Environment.InsideObjects {
   public class BaseInsideItem : MonoBehaviour, IPoolable {
 
     public void Initialize() {
-      OnSetToPool();
+      ReturnToPool();
     }
 
     public void OnGetFromPool() {
@@ -13,7 +13,7 @@ namespace Environment.InsideObjects {
       InPool = false;
     }
 
-    public void OnSetToPool() {
+    public void ReturnToPool() {
       gameObject.SetActive(false);
       InPool = true;
     }

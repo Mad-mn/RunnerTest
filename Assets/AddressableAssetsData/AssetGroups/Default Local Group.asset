@@ -102,6 +102,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c091a3bf85fe5646abe5f8c76d2c154
+    m_Address: UI/Gameplay/GameplayWindow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 83607aee0e6283e45aa26ab4aa0478de, type: 2}
   m_SchemaSet:

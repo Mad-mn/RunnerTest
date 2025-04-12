@@ -53,7 +53,7 @@ namespace Environment.Road {
       }
 
       foreach (T insideItem in list) {
-        insideItem.OnSetToPool();
+        insideItem.ReturnToPool();
       }
     }
 
@@ -62,7 +62,7 @@ namespace Environment.Road {
 
     public void Initialize() {
       _roadEnvironmentSpawnManager = ProjectContext.Instance.Container.Resolve<IRoadEnvironmentSpawnManager>();
-      OnSetToPool();
+      ReturnToPool();
     }
 
     public void OnGetFromPool() {
@@ -70,7 +70,7 @@ namespace Environment.Road {
       InPool = false;
     }
 
-    public void OnSetToPool() {
+    public void ReturnToPool() {
       HideEnvironment();
       gameObject.SetActive(false);
       InPool = true;

@@ -82,7 +82,7 @@ namespace Core.Managers.RoadEnvironment {
 
     private T SpawnItem<T>(T prefab, Transform root, List<Transform> possiblePositions, Vector3[] takenPositions, int index, bool randomRotation = false) where T : MonoBehaviour, IPoolable {
       T item = _poolManager.GetFromPool<T>(prefab.GetType());
-      Vector3 spawnPosition = typeof(T) == typeof(BaseObstacle) ? GetRandomObstacleSpawnPosition(possiblePositions, takenPositions) : GetRandomSpawnPosition(possiblePositions, takenPositions);
+      Vector3 spawnPosition = prefab is BaseObstacle ? GetRandomObstacleSpawnPosition(possiblePositions, takenPositions) : GetRandomSpawnPosition(possiblePositions, takenPositions);
       takenPositions[index] = spawnPosition;
       SetupTransform(item.transform, root, spawnPosition, randomRotation);
       return item;
@@ -118,7 +118,7 @@ namespace Core.Managers.RoadEnvironment {
 
       do {
         newPosition = GetRandomSpawnPosition(outsidePositions, occupiedPositions.ToArray());
-        int nearObstacleCount = occupiedPositions.Count(pos => pos.x == newPosition.x);
+        int nearObstacleCount = occupiedPositions.Count(pos => pos.z == newPosition.z);
 
         if (nearObstacleCount < _roadConfigData.SideAmount - 1) {
           validPositionFound = true;

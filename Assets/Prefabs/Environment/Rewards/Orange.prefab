@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8364784640663712477}
   - component: {fileID: -6195160868496707624}
+  - component: {fileID: 6683356281326537614}
   m_Layer: 0
   m_Name: Orange
   m_TagString: Untagged
@@ -45,6 +46,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8344470b7c73711488ccd5e5964d9220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rewardType: 1
+--- !u!65 &6683356281326537614
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4893604398770036665}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5222081, y: 0.6980417, z: 0.5264311}
+  m_Center: {x: 0.0067114383, y: 0.9573704, z: -0.004062891}
 --- !u!1001 &8566500602006685453
 PrefabInstance:
   m_ObjectHideFlags: 0

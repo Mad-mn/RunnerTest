@@ -1,5 +1,6 @@
 using Core.Loaders.Scene;
 using Core.Managers.UI;
+using Core.Views.Gameplay;
 using Cysharp.Threading.Tasks;
 using Tools.Constants;
 using UI.Windows;
@@ -30,6 +31,7 @@ namespace Core.Views.Lobby {
     private void OnPlayButton() {
       LoadPlayScene().Forget();
       _uiManager.HideWindow<LobbyWindow>();
+      _uiManager.ShowWindow<GameplayWindow>();
     }
 
     private async UniTaskVoid LoadPlayScene() {

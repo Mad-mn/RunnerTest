@@ -1,3 +1,3 @@
 namespace Environment.InsideObjects.Rewards {
-  public class Apple : BaseInsideItem {}
+  public class Apple : BaseRewardItem {}
 }

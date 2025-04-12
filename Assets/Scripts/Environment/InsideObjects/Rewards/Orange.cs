@@ -1,3 +1,3 @@
 namespace Environment.InsideObjects.Rewards {
-  public class Orange : BaseInsideItem {}
+  public class Orange : BaseRewardItem {}
 }

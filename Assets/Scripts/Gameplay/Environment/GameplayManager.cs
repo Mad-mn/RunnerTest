@@ -3,7 +3,9 @@ using Camera;
 using Configs;
 using Configs.PlayerConfigs;
 using Configs.RoadConfigs;
+using Core.Managers.UI;
 using Core.ObjectPool;
+using Core.Views.Gameplay;
 using Cysharp.Threading.Tasks;
 using Environment.Road;
 using Player;
@@ -32,15 +34,21 @@ namespace Gameplay.Environment {
     private RoadCreator _roadCreator;
     private readonly List<RoadItem> _roadItems = new List<RoadItem>();
     private PlayerController _playerController;
+    private GameplayWindow _gameplayWindow;
 
     private void Awake() {
       _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
       Initialize();
     }
 
-    private void Start() {
-      SpawnPlayer().Forget();
+    private async void Start() {
+      await SpawnPlayer();
       InitializeStartedEnvironment();
+      AddListeners();
+    }
+
+    private void OnDestroy() {
+      RemoveListeners();
     }
 
     private void InitializeStartedEnvironment() {
@@ -69,7 +77,7 @@ namespace Gameplay.Environment {
       _roadItems.Add(newRoad);
     }
 
-    private async UniTaskVoid SpawnPlayer() {
+    private async UniTask SpawnPlayer() {
       GameObject playerPrefab = await _playerConfig.PlayerReference.LoadAssetAsync<GameObject>();
       GameObject player = Instantiate(playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
       _playerController = player.GetComponent<PlayerController>();
@@ -85,6 +93,15 @@ namespace Gameplay.Environment {
     private void Initialize() {
       _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
       _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
+      _gameplayWindow = ProjectContext.Instance.Container.Resolve<IUIManager>().GetWindow<GameplayWindow>();
+    }
+
+    private void AddListeners() {
+      _playerController.OnCatchReward += _gameplayWindow.OnPlayerCatchReward;
+    }
+
+    private void RemoveListeners() {
+      _playerController.OnCatchReward += _gameplayWindow.OnPlayerCatchReward;
     }
   }
 }
