@@ -47,6 +47,7 @@ namespace Gameplay.Environment {
       for (int i = 0; i < startAmount; i++) {
         RoadItem newRoad = _roadCreator.SpawnRoadItem(i == 0 ? _startRoadSpawnPoint.position : _roadItems[^1].ExitPosition);
         newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
+        newRoad.SetupEnvironment(i != 0);
         _roadItems.Add(newRoad);
       }
     }
@@ -63,6 +64,7 @@ namespace Gameplay.Environment {
       _objectPoolManager.ReturnToPool(oldRoad);
       RoadItem newRoad = _roadCreator.SpawnRoadItem( _roadItems[^1].ExitPosition);
       newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
+      newRoad.SetupEnvironment(true);
       _roadItems.Add(newRoad);
     }
 

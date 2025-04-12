@@ -22,3 +22,12 @@ MonoBehaviour:
     - {fileID: 8426532483075709774, guid: c5a29311a3661e64789814dcaeea13a4, type: 3}
     - {fileID: 4447357851566407185, guid: 5f6d7e9739216d64aa417075533e1043, type: 3}
     - {fileID: -7848644237381767519, guid: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b, type: 3}
+    SpawnObstacleChanceMax: 0.5
+    SpawnObstacleChanceMin: 0.1
+    Obstacle: {fileID: -7433744346076918379, guid: c40453d00513d574b86198b76945957b, type: 3}
+    SpawnRewardChanceMax: 0.5
+    SpawnRewardChanceMin: 0.1
+    RewardItems:
+    - {fileID: -3896921571673977411, guid: f10a8ee42dbcef84e8686022710f8bb1, type: 3}
+    - {fileID: 3770422590498588912, guid: 6c32918a76b1ebc4c998cf8c02fe6f65, type: 3}
+    - {fileID: -6195160868496707624, guid: b08e7dba024395c49ac3f69b0e1b8a6a, type: 3}
