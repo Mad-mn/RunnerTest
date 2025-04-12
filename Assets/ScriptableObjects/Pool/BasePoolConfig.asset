@@ -13,33 +13,63 @@ MonoBehaviour:
   m_Name: BasePoolConfig
   m_EditorClassIdentifier: 
   _prefabsForPool:
-  - Prefab: {fileID: 1975873985991212123, guid: bb85095f951836d4ba15f2e3556f9ae8, type: 3}
+  - AssetReference:
+      m_AssetGUID: bb85095f951836d4ba15f2e3556f9ae8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     SpawnAmount: 7
-    AddressablePath: 
-  - Prefab: {fileID: 4074541784781682739, guid: 77c7a59b281dfb54da2a3fb160db7bd8, type: 3}
+  - AssetReference:
+      m_AssetGUID: 96a9c52d97bb5fc4f866e962b81362b5
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 10
-    AddressablePath: 
-  - Prefab: {fileID: 8122723481264743279, guid: c5a29311a3661e64789814dcaeea13a4, type: 3}
+  - AssetReference:
+      m_AssetGUID: 77c7a59b281dfb54da2a3fb160db7bd8
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 10
-    AddressablePath: 
-  - Prefab: {fileID: 8756879071268112272, guid: 5f6d7e9739216d64aa417075533e1043, type: 3}
+  - AssetReference:
+      m_AssetGUID: c5a29311a3661e64789814dcaeea13a4
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 10
-    AddressablePath: 
-  - Prefab: {fileID: 1580161814713256917, guid: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b, type: 3}
+  - AssetReference:
+      m_AssetGUID: 5f6d7e9739216d64aa417075533e1043
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 10
-    AddressablePath: 
-  - Prefab: {fileID: 7910930245886511466, guid: 96a9c52d97bb5fc4f866e962b81362b5, type: 3}
+  - AssetReference:
+      m_AssetGUID: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 10
-    AddressablePath: 
-  - Prefab: {fileID: 8889504880275813856, guid: f10a8ee42dbcef84e8686022710f8bb1, type: 3}
+  - AssetReference:
+      m_AssetGUID: f10a8ee42dbcef84e8686022710f8bb1
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 30
-    AddressablePath: 
-  - Prefab: {fileID: 3741945577894217439, guid: 6c32918a76b1ebc4c998cf8c02fe6f65, type: 3}
+  - AssetReference:
+      m_AssetGUID: b08e7dba024395c49ac3f69b0e1b8a6a
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 30
-    AddressablePath: 
-  - Prefab: {fileID: 4893604398770036665, guid: b08e7dba024395c49ac3f69b0e1b8a6a, type: 3}
+  - AssetReference:
+      m_AssetGUID: 6c32918a76b1ebc4c998cf8c02fe6f65
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
     SpawnAmount: 30
-    AddressablePath: 
-  - Prefab: {fileID: 2460635049563326503, guid: c40453d00513d574b86198b76945957b, type: 3}
+  - AssetReference:
+      m_AssetGUID: c40453d00513d574b86198b76945957b
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     SpawnAmount: 30
-    AddressablePath: 

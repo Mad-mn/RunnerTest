@@ -1,14 +1,18 @@
 using Core.Loaders.Scene;
+using Core.Managers.UI;
+using Cysharp.Threading.Tasks;
 using Tools.Constants;
+using UI.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Core.Views.Lobby {
-  public class LobbyView : MonoBehaviour {
+  public class LobbyWindow : BaseUIWindow {
     [SerializeField]
     private Button _playButton;
 
+    private IUIManager _uiManager;
     private ISceneLoader _sceneLoader;
 
     private void Start() {
@@ -24,7 +28,12 @@ namespace Core.Views.Lobby {
     }
 
     private void OnPlayButton() {
-      _sceneLoader.LoadSceneAsync(SceneNameConstants.GameplaySceneKey);
+      LoadPlayScene().Forget();
+      _uiManager.HideWindow<LobbyWindow>();
+    }
+
+    private async UniTaskVoid LoadPlayScene() {
+      await _sceneLoader.LoadSceneAsync(SceneNameConstants.GameplaySceneKey);
     }
 
     private void AddListeners() {
@@ -38,6 +47,7 @@ namespace Core.Views.Lobby {
     private void InitComponents() {
       DiContainer container = ProjectContext.Instance.Container;
       _sceneLoader = container.Resolve<ISceneLoader>();
+      _uiManager = container.Resolve<IUIManager>();
     }
   }
 }

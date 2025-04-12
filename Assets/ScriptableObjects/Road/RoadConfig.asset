@@ -31,3 +31,5 @@ MonoBehaviour:
     - {fileID: -3896921571673977411, guid: f10a8ee42dbcef84e8686022710f8bb1, type: 3}
     - {fileID: 3770422590498588912, guid: 6c32918a76b1ebc4c998cf8c02fe6f65, type: 3}
     - {fileID: -6195160868496707624, guid: b08e7dba024395c49ac3f69b0e1b8a6a, type: 3}
+    SideWight: 3
+    SideAmount: 3

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Configs.PlayerConfigs {
   [CreateAssetMenu(menuName = "Configs/PlayerConfigs/PlayerConfig", fileName = "PlayerConfig")]
@@ -15,7 +16,7 @@ namespace Configs.PlayerConfigs {
 
   [Serializable]
   public struct PlayerConfigData {
-    public string PlayerPrefabPath;
+    public AssetReference PlayerReference;
     public Vector3 CameraOffset;
     public float RunSpeed;
     public float ChangeSideSpeed;

@@ -35,5 +35,7 @@ namespace Configs.RoadConfigs {
     [Range(0, 1)]
     public float SpawnRewardChanceMin;
     public List<BaseInsideItem> RewardItems;
+    public int SideWight;
+    public int SideAmount;
   }
 }

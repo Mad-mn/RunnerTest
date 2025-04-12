@@ -8,7 +8,6 @@ using Cysharp.Threading.Tasks;
 using Environment.Road;
 using Player;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using Zenject;
 
 namespace Gameplay.Environment {
@@ -28,6 +27,7 @@ namespace Gameplay.Environment {
     private IConfigManager _configManager;
 
     private PlayerConfigData _playerConfig;
+    private RoadConfigData _roadConfig;
 
     private RoadCreator _roadCreator;
     private readonly List<RoadItem> _roadItems = new List<RoadItem>();
@@ -35,6 +35,7 @@ namespace Gameplay.Environment {
 
     private void Awake() {
       _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
+      Initialize();
     }
 
     private void Start() {
@@ -69,18 +70,21 @@ namespace Gameplay.Environment {
     }
 
     private async UniTaskVoid SpawnPlayer() {
-      _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
-
-      GameObject playerPrefab = await Addressables.LoadAssetAsync<GameObject>(_playerConfig.PlayerPrefabPath);
+      GameObject playerPrefab = await _playerConfig.PlayerReference.LoadAssetAsync<GameObject>();
       GameObject player = Instantiate(playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
       _playerController = player.GetComponent<PlayerController>();
       _playerController.Initialize(new PlayerMovementData {
         ChangeSideSpeed = _playerConfig.ChangeSideSpeed,
         Speed = _playerConfig.RunSpeed,
-        SideWight = 3
+        SideWight = _roadConfig.SideWight
       });
       player.transform.position = _playerSpawnPoint.position;
       _cameraController.SetupTarget(player.transform, _playerConfig.CameraOffset);
+    }
+
+    private void Initialize() {
+      _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
+      _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
     }
   }
 }

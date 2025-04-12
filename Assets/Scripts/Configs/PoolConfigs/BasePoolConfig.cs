@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Configs.PoolConfigs {
   [CreateAssetMenu(menuName = "Configs/PoolConfigs/BasePoolConfig", fileName = "BasePoolConfig")]
@@ -13,7 +14,7 @@ namespace Configs.PoolConfigs {
 
   [Serializable]
   public class PoolPrefabItem {
-    public GameObject Prefab;
+    public AssetReference AssetReference;
     public int SpawnAmount;
   }
 
