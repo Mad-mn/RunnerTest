@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefabsForPool:
   - Prefab: {fileID: 1975873985991212123, guid: bb85095f951836d4ba15f2e3556f9ae8, type: 3}
-    SpawnAmount: 5
+    SpawnAmount: 7
+  - Prefab: {fileID: 4074541784781682739, guid: 77c7a59b281dfb54da2a3fb160db7bd8, type: 3}
+    SpawnAmount: 10
+  - Prefab: {fileID: 8122723481264743279, guid: c5a29311a3661e64789814dcaeea13a4, type: 3}
+    SpawnAmount: 10
+  - Prefab: {fileID: 8756879071268112272, guid: 5f6d7e9739216d64aa417075533e1043, type: 3}
+    SpawnAmount: 10
+  - Prefab: {fileID: 1580161814713256917, guid: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b, type: 3}
+    SpawnAmount: 10
+  - Prefab: {fileID: 7910930245886511466, guid: 96a9c52d97bb5fc4f866e962b81362b5, type: 3}
+    SpawnAmount: 10

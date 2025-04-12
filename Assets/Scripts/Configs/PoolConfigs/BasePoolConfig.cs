@@ -15,6 +15,7 @@ namespace Configs.PoolConfigs {
   public class PoolPrefabItem {
     public GameObject Prefab;
     public int SpawnAmount;
+    public string AddressablePath;
   }
 
 }
