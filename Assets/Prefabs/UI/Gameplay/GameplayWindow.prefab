@@ -653,6 +653,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6230740390023174604}
   - component: {fileID: 1139832250078097905}
+  - component: {fileID: 4851825573343735313}
   m_Layer: 5
   m_Name: Controllers
   m_TagString: Untagged
@@ -695,6 +696,19 @@ MonoBehaviour:
   - {fileID: 4827577442832831235}
   - {fileID: 6744318666626391157}
   - {fileID: 1448578770584180474}
+--- !u!114 &4851825573343735313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744470803865548847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef4cbe8c79712e4ebf2c53d232f73ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOverPanel: {fileID: 3012795938384954001}
 --- !u!1 &8580180420786224076
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +838,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rewardVisualController: {fileID: 1139832250078097905}
+  _gameoverPanel: {fileID: 4851825573343735313}
+  _exitButton: {fileID: 6491982641516683874}
 --- !u!1 &8723949382778311190
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ namespace Environment.InsideObjects.Rewards {
     private RewardType _rewardType;
 
     public void OnCatch() {
-      ReturnToPool();
+      _objectPoolManager.ReturnToPool(this);
     }
 
     public RewardType RewardType {

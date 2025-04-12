@@ -3,12 +3,15 @@ using Camera;
 using Configs;
 using Configs.PlayerConfigs;
 using Configs.RoadConfigs;
+using Core.Loaders.Scene;
 using Core.Managers.UI;
 using Core.ObjectPool;
 using Core.Views.Gameplay;
+using Core.Views.Lobby;
 using Cysharp.Threading.Tasks;
 using Environment.Road;
 using Player;
+using Tools.Constants;
 using UnityEngine;
 using Zenject;
 
@@ -35,6 +38,8 @@ namespace Gameplay.Environment {
     private readonly List<RoadItem> _roadItems = new List<RoadItem>();
     private PlayerController _playerController;
     private GameplayWindow _gameplayWindow;
+    private ISceneLoader _sceneLoader;
+    private IUIManager _uiManager;
 
     private void Awake() {
       _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
@@ -78,7 +83,7 @@ namespace Gameplay.Environment {
     }
 
     private async UniTask SpawnPlayer() {
-      GameObject playerPrefab = await _playerConfig.PlayerReference.LoadAssetAsync<GameObject>();
+      GameObject playerPrefab = _playerConfig.PlayerReference.Asset == null ? await _playerConfig.PlayerReference.LoadAssetAsync<GameObject>() : _playerConfig.PlayerReference.Asset as GameObject;
       GameObject player = Instantiate(playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
       _playerController = player.GetComponent<PlayerController>();
       _playerController.Initialize(new PlayerMovementData {
@@ -90,18 +95,38 @@ namespace Gameplay.Environment {
       _cameraController.SetupTarget(player.transform, _playerConfig.CameraOffset);
     }
 
+    private void ClearScene() {
+      foreach (RoadItem roadItem in _roadItems) {
+        _objectPoolManager.ReturnToPool(roadItem);
+      }
+    }
+
     private void Initialize() {
       _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
       _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
-      _gameplayWindow = ProjectContext.Instance.Container.Resolve<IUIManager>().GetWindow<GameplayWindow>();
+      DiContainer container = ProjectContext.Instance.Container;
+      _gameplayWindow = container.Resolve<IUIManager>().GetWindow<GameplayWindow>();
+      _sceneLoader = container.Resolve<ISceneLoader>();
+      _uiManager = container.Resolve<IUIManager>();
     }
 
     private void AddListeners() {
       _playerController.OnCatchReward += _gameplayWindow.OnPlayerCatchReward;
+      _playerController.OnCollideWithObstacle += _gameplayWindow.OnPlayerCollideWithObstacle;
+      _gameplayWindow.OnExit += ExitToLobby;
     }
 
     private void RemoveListeners() {
-      _playerController.OnCatchReward += _gameplayWindow.OnPlayerCatchReward;
+      _playerController.OnCatchReward -= _gameplayWindow.OnPlayerCatchReward;
+      _playerController.OnCollideWithObstacle -= _gameplayWindow.OnPlayerCollideWithObstacle;
+      _gameplayWindow.OnExit -= ExitToLobby;
+    }
+
+    private async void ExitToLobby() {
+      ClearScene();
+      await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
+      _uiManager.HideWindow<GameplayWindow>();
+      _uiManager.ShowWindow<LobbyWindow>();
     }
   }
 }

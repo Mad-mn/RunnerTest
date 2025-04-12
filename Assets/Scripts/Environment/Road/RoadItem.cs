@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Managers.RoadEnvironment;
+using Core.ObjectPool;
 using Environment.InsideObjects;
 using Environment.OutsideObjects;
 using Tools.Constants;
@@ -21,6 +22,7 @@ namespace Environment.Road {
     private List<Transform> _insidePositions;
 
     private IRoadEnvironmentSpawnManager _roadEnvironmentSpawnManager;
+    private IObjectPoolManager _objectPoolManager;
 
     private List<BaseOutsideItem> _outsideItems;
     private List<BaseInsideItem> _obstacles;
@@ -53,7 +55,7 @@ namespace Environment.Road {
       }
 
       foreach (T insideItem in list) {
-        insideItem.ReturnToPool();
+        _objectPoolManager.ReturnToPool(insideItem);
       }
     }
 
@@ -61,7 +63,9 @@ namespace Environment.Road {
     public Vector3 ExitPosition { get { return _exitPosition.position; } }
 
     public void Initialize() {
-      _roadEnvironmentSpawnManager = ProjectContext.Instance.Container.Resolve<IRoadEnvironmentSpawnManager>();
+      DiContainer container = ProjectContext.Instance.Container;
+      _roadEnvironmentSpawnManager = container.Resolve<IRoadEnvironmentSpawnManager>();
+      _objectPoolManager = container.Resolve<IObjectPoolManager>();
       ReturnToPool();
     }
 
