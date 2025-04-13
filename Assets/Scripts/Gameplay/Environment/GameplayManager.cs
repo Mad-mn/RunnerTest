@@ -8,7 +8,6 @@ using Core.Managers.UI;
 using Core.ObjectPool;
 using Core.Views.Gameplay;
 using Core.Views.Lobby;
-using Cysharp.Threading.Tasks;
 using Environment.Road;
 using Player;
 using Tools.Constants;
@@ -35,7 +34,7 @@ namespace Gameplay.Environment {
     private RoadConfigData _roadConfig;
 
     private RoadCreator _roadCreator;
-    private readonly List<RoadItem> _roadItems = new List<RoadItem>();
+    private List<RoadItem> _roadItems;
     private PlayerController _playerController;
     private GameplayWindow _gameplayWindow;
     private ISceneLoader _sceneLoader;
@@ -47,8 +46,8 @@ namespace Gameplay.Environment {
     }
 
     private async void Start() {
-      await SpawnPlayer();
       InitializeStartedEnvironment();
+      SpawnPlayer();
       AddListeners();
     }
 
@@ -57,6 +56,7 @@ namespace Gameplay.Environment {
     }
 
     private void InitializeStartedEnvironment() {
+      _roadItems = new List<RoadItem>();
       int startAmount = _configManager.GetConfig<RoadConfig>().RoadConfigData.StartAmount;
       for (int i = 0; i < startAmount; i++) {
         RoadItem newRoad = _roadCreator.SpawnRoadItem(i == 0 ? _startRoadSpawnPoint.position : _roadItems[^1].ExitPosition);
@@ -74,6 +74,7 @@ namespace Gameplay.Environment {
 
     private void UpdateRoad() {
       RoadItem oldRoad = _roadItems[0];
+      oldRoad.OnPlayerEnter -= OnPlayerEnterInNewRoadItem;
       _roadItems.RemoveAt(0);
       _objectPoolManager.ReturnToPool(oldRoad);
       RoadItem newRoad = _roadCreator.SpawnRoadItem( _roadItems[^1].ExitPosition);
@@ -82,23 +83,26 @@ namespace Gameplay.Environment {
       _roadItems.Add(newRoad);
     }
 
-    private async UniTask SpawnPlayer() {
-      GameObject playerPrefab = _playerConfig.PlayerReference.Asset == null ? await _playerConfig.PlayerReference.LoadAssetAsync<GameObject>() : _playerConfig.PlayerReference.Asset as GameObject;
-      GameObject player = Instantiate(playerPrefab, _playerSpawnPoint.position, Quaternion.identity);
-      _playerController = player.GetComponent<PlayerController>();
+    private void SpawnPlayer() {
+      _playerController = _objectPoolManager.GetFromPool<PlayerController>();
       _playerController.Initialize(new PlayerMovementData {
         ChangeSideSpeed = _playerConfig.ChangeSideSpeed,
         Speed = _playerConfig.RunSpeed,
         SideWight = _roadConfig.SideWight
       });
-      player.transform.position = _playerSpawnPoint.position;
-      _cameraController.SetupTarget(player.transform, _playerConfig.CameraOffset);
+      _playerController.transform.position = _playerSpawnPoint.position;
+      _playerController.transform.SetParent(_playerSpawnPoint);
+      _cameraController.SetupTarget(_playerController.transform, _playerConfig.CameraOffset);
     }
 
     private void ClearScene() {
       foreach (RoadItem roadItem in _roadItems) {
+        roadItem.OnPlayerEnter -= OnPlayerEnterInNewRoadItem;
         _objectPoolManager.ReturnToPool(roadItem);
       }
+
+      _playerController.transform.position = _playerSpawnPoint.position;
+      _objectPoolManager.ReturnToPool(_playerController);
     }
 
     private void Initialize() {
