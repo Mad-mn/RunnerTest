@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Configs;
 using Configs.PoolConfigs;
 using Cysharp.Threading.Tasks;
@@ -34,7 +35,17 @@ namespace Core.ObjectPool {
         return poolItem.PollPoolable as T;
       }
 
-      Debug.LogError($"Pool item with type {typeof(T)} exist");
+      Debug.Log($"There is no free item {typeof(T)}. Try create new.");
+
+      poolItem =  _poolItems.FirstOrDefault(item => item.PollPoolable is T);
+
+      if (poolItem != default) {
+        PoolItem newItem = CreateItem(poolItem.GameObject);
+        _poolItems.Add(newItem);
+        return newItem.PollPoolable as T;
+      }
+
+      Debug.LogError($"Pool item with type {typeof(T)} exist.");
       return default;
     }
 
@@ -45,35 +56,44 @@ namespace Core.ObjectPool {
         return poolItem.PollPoolable as T;
       }
 
-      Debug.LogError($"Pool item with type {objType} exist.");
+      Debug.Log($"There is no free item {typeof(T)}. Try create new.");
+      poolItem =  _poolItems.FirstOrDefault(item => item.Type == objType);
 
+      if (poolItem != default) {
+        PoolItem newItem = CreateItem(poolItem.GameObject);
+        _poolItems.Add(newItem);
+        return newItem.PollPoolable as T;
+      }
+
+      Debug.LogError($"Pool item with type {typeof(T)} exist.");
       return default;
     }
 
     public void ReturnToPool<T>(T returnedObject) where T : MonoBehaviour, IPoolable {
       PoolItem poolableItem = _poolItems.Find(item => item.GameObject == returnedObject.gameObject);
-      poolableItem.PollPoolable.OnSetToPool();
+      poolableItem.PollPoolable.ReturnToPool();
       poolableItem.GameObject.transform.SetParent(_poolContainer);
     }
 
     private async UniTask InitializeItems() {
       foreach (PoolPrefabItem poolPrefabItem in _basePoolConfig.Prefabs) {
+        GameObject prefab = await poolPrefabItem.AssetReference.LoadAssetAsync<GameObject>();
         for (int i = 0; i < poolPrefabItem.SpawnAmount; i++) {
-          CreateItem(poolPrefabItem.Prefab);
+          _poolItems.Add(CreateItem(prefab));
         }
 
         await UniTask.NextFrame();
       }
     }
 
-    private void CreateItem(GameObject prefab) {
+    private PoolItem CreateItem(GameObject prefab) {
       GameObject item = Object.Instantiate(prefab, _poolContainer, true);
       PoolItem poolItem = new PoolItem();
       poolItem.GameObject = item;
       poolItem.PollPoolable = item.GetComponent<IPoolable>();
       poolItem.Type = poolItem.PollPoolable.GetType();
       poolItem.PollPoolable.Initialize();
-      _poolItems.Add(poolItem);
+      return poolItem;
     }
   }
 

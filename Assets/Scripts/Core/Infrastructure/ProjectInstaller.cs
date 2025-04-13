@@ -1,6 +1,7 @@
 using Configs;
 using Core.Loaders.Scene;
 using Core.Managers.RoadEnvironment;
+using Core.Managers.UI;
 using Core.ObjectPool;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Core.Infrastructure {
       Container.Bind<IConfigManager>().To<ConfigManager>().FromResolve();
       Container.Bind<IObjectPoolManager>().To<ObjectPoolManager>().AsSingle();
       Container.Bind<IRoadEnvironmentSpawnManager>().To<RoadEnvironmentSpawnManager>().AsSingle();
+      Container.Bind<IUIManager>().To<UIManager>().AsSingle();
     }
   }
 }

@@ -1,11 +1,16 @@
 using Core.ObjectPool;
 using UnityEngine;
+using Zenject;
+using IPoolable = Core.ObjectPool.IPoolable;
 
 namespace Environment.InsideObjects {
   public class BaseInsideItem : MonoBehaviour, IPoolable {
 
+    protected IObjectPoolManager _objectPoolManager;
+
     public void Initialize() {
-      OnSetToPool();
+      _objectPoolManager = ProjectContext.Instance.Container.Resolve<IObjectPoolManager>();
+      ReturnToPool();
     }
 
     public void OnGetFromPool() {
@@ -13,7 +18,7 @@ namespace Environment.InsideObjects {
       InPool = false;
     }
 
-    public void OnSetToPool() {
+    public void ReturnToPool() {
       gameObject.SetActive(false);
       InPool = true;
     }

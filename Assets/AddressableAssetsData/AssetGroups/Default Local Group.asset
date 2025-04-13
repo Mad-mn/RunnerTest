@@ -47,6 +47,66 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c40453d00513d574b86198b76945957b
+    m_Address: Prafabs/Obstacles/Obstacle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96a9c52d97bb5fc4f866e962b81362b5
+    m_Address: Prefabs/Environment/OutsideObjects/Bush.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77c7a59b281dfb54da2a3fb160db7bd8
+    m_Address: Prefabs/Environment/OutsideObjects/OutsideTree.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5a29311a3661e64789814dcaeea13a4
+    m_Address: Prefabs/Environment/OutsideObjects/RedTree.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f6d7e9739216d64aa417075533e1043
+    m_Address: Prefabs/Environment/OutsideObjects/Rock.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b
+    m_Address: Prefabs/Environment/OutsideObjects/Waterpool.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f10a8ee42dbcef84e8686022710f8bb1
+    m_Address: Prefabs/Environment/Rewards/Apple.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b08e7dba024395c49ac3f69b0e1b8a6a
+    m_Address: Prefabs/Environment/Rewards/Orange.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c32918a76b1ebc4c998cf8c02fe6f65
+    m_Address: Prefabs/Environment/Rewards/Kiwi.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb85095f951836d4ba15f2e3556f9ae8
+    m_Address: Prefabs/Environment/Road/RoadItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36961a4bda082554a8c77a02ab73ce7a
+    m_Address: Prefabs/UI/Canvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c091a3bf85fe5646abe5f8c76d2c154
+    m_Address: UI/Gameplay/GameplayWindow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 83607aee0e6283e45aa26ab4aa0478de, type: 2}
   m_SchemaSet:

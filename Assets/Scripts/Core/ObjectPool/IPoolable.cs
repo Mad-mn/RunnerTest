@@ -2,7 +2,7 @@ namespace Core.ObjectPool {
   public interface IPoolable {
     void Initialize();
     void OnGetFromPool();
-    void OnSetToPool();
+    void ReturnToPool();
 
     bool InPool { get; set; }
   }

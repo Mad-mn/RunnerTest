@@ -15,7 +15,7 @@ namespace Player {
     private Vector3 _moveDirection;
     private int _currentLane  ;
 
-    private bool _start;
+    private bool _canRun;
 
     public void SetupData(PlayerMovementData movementData) {
       _speed = movementData.Speed;
@@ -23,14 +23,18 @@ namespace Player {
       _sideWight = movementData.SideWight;
     }
 
+    public void Stop() {
+      _canRun = false;
+    }
+
     private void Update() {
 
       if (Input.GetKeyDown(KeyCode.W)) {
-        _start = true;
+        _canRun = true;
         _animationController.StartRunAnimation();
       }
 
-      if (!_start) {
+      if (!_canRun) {
         return;
       }
 

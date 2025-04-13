@@ -4,6 +4,7 @@ using Configs;
 using Configs.RoadConfigs;
 using Core.ObjectPool;
 using Environment.InsideObjects;
+using Environment.InsideObjects.Obstacles;
 using Environment.OutsideObjects;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ namespace Core.Managers.RoadEnvironment {
 
     private T SpawnItem<T>(T prefab, Transform root, List<Transform> possiblePositions, Vector3[] takenPositions, int index, bool randomRotation = false) where T : MonoBehaviour, IPoolable {
       T item = _poolManager.GetFromPool<T>(prefab.GetType());
-      Vector3 spawnPosition = GetRandomSpawnPosition(possiblePositions, takenPositions);
+      Vector3 spawnPosition = prefab is BaseObstacle ? GetRandomObstacleSpawnPosition(possiblePositions, takenPositions) : GetRandomSpawnPosition(possiblePositions, takenPositions);
       takenPositions[index] = spawnPosition;
       SetupTransform(item.transform, root, spawnPosition, randomRotation);
       return item;
@@ -104,6 +105,36 @@ namespace Core.Managers.RoadEnvironment {
       }
 
       return availablePositions[Random.Range(0, availablePositions.Count)];
+    }
+
+    private Vector3 GetRandomObstacleSpawnPosition(List<Transform> outsidePositions, Vector3[] positions) {
+      List<Vector3> occupiedPositions = new List<Vector3>(positions);
+      Vector3 newPosition = Vector3.zero;
+
+      int attempts = 0;
+      int maxAttempts = 20;
+
+      bool validPositionFound = false;
+
+      do {
+        newPosition = GetRandomSpawnPosition(outsidePositions, occupiedPositions.ToArray());
+        int nearObstacleCount = occupiedPositions.Count(pos => pos.z == newPosition.z);
+
+        if (nearObstacleCount < _roadConfigData.SideAmount - 1) {
+          validPositionFound = true;
+        } else {
+          occupiedPositions.Add(newPosition);
+        }
+
+        attempts++;
+
+      } while (!validPositionFound && attempts < maxAttempts);
+
+      if (!validPositionFound) {
+        Debug.LogError("Cant find valid position for obstacle");
+      }
+
+      return newPosition;
     }
   }
 }

@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: BasePlayer
   m_EditorClassIdentifier: 
   _playerConfigData:
-    PlayerPrefabPath: Prefabs/Player/Player.prefab
+    PlayerReference:
+      m_AssetGUID: c38ea7360bb6b4c41871836dec88edac
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
     CameraOffset: {x: 0, y: 21, z: -14}
     RunSpeed: 15
     ChangeSideSpeed: 0.2

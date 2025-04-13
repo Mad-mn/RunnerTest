@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Environment.OutsideObjects {
   public class BaseOutsideItem : MonoBehaviour, IPoolable {
     public void Initialize() {
-      OnSetToPool();
+      ReturnToPool();
     }
 
     public void OnGetFromPool() {
@@ -12,7 +12,7 @@ namespace Environment.OutsideObjects {
       InPool = false;
     }
 
-    public void OnSetToPool() {
+    public void ReturnToPool() {
       gameObject.SetActive(false);
       InPool = true;
     }
