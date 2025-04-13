@@ -6,6 +6,8 @@ using Configs.RoadConfigs;
 using Core.Loaders.Scene;
 using Core.Managers.UI;
 using Core.ObjectPool;
+using Core.SaveLoadDataSystem;
+using Core.SaveLoadDataSystem.SavedData;
 using Core.Views.Gameplay;
 using Core.Views.Lobby;
 using Environment.Road;
@@ -25,11 +27,11 @@ namespace Gameplay.Environment {
     [SerializeField]
     private GameplayCameraController _cameraController;
 
-    [Inject]
     private IObjectPoolManager _objectPoolManager;
-    [Inject]
     private IConfigManager _configManager;
-
+    private ISceneLoader _sceneLoader;
+    private IUIManager _uiManager;
+    private IDataHandler _dataHandler;
     private PlayerConfigData _playerConfig;
     private RoadConfigData _roadConfig;
 
@@ -37,18 +39,16 @@ namespace Gameplay.Environment {
     private List<RoadItem> _roadItems;
     private PlayerController _playerController;
     private GameplayWindow _gameplayWindow;
-    private ISceneLoader _sceneLoader;
-    private IUIManager _uiManager;
 
     private void Awake() {
-      _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
-      Initialize();
+      InitializeComponents();
     }
 
     private async void Start() {
       InitializeStartedEnvironment();
       SpawnPlayer();
       AddListeners();
+      Debug.LogError(_dataHandler.GetData<PlayerData>().GetListOfGames().Count);
     }
 
     private void OnDestroy() {
@@ -105,13 +105,17 @@ namespace Gameplay.Environment {
       _objectPoolManager.ReturnToPool(_playerController);
     }
 
-    private void Initialize() {
-      _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
-      _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
+    private void InitializeComponents() {
       DiContainer container = ProjectContext.Instance.Container;
       _gameplayWindow = container.Resolve<IUIManager>().GetWindow<GameplayWindow>();
       _sceneLoader = container.Resolve<ISceneLoader>();
       _uiManager = container.Resolve<IUIManager>();
+      _objectPoolManager = container.Resolve<IObjectPoolManager>();
+      _configManager = container.Resolve<IConfigManager>();
+      _dataHandler = container.Resolve<IDataHandler>();
+      _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
+      _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
+      _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
     }
 
     private void AddListeners() {
@@ -127,6 +131,8 @@ namespace Gameplay.Environment {
     }
 
     private async void ExitToLobby() {
+      _dataHandler.GetData<PlayerData>().SetupNewResult(10);
+      _dataHandler.Save();
       ClearScene();
       await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
       _uiManager.HideWindow<GameplayWindow>();
