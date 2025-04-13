@@ -20,4 +20,4 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
     CameraOffset: {x: 0, y: 21, z: -14}
     RunSpeed: 15
-    ChangeSideSpeed: 0.2
+    ChangeSideSpeed: 20

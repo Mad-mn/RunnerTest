@@ -69,7 +69,7 @@ namespace Player {
 
     private void Move() {
       float targetX = _currentLane * _sideWight;
-      float newX = Mathf.MoveTowards(transform.position.x, targetX, _changeSideSpeed);
+      float newX = Mathf.MoveTowards(transform.position.x, targetX, _changeSideSpeed*Time.deltaTime);
       float xMovement = newX - transform.position.x;
       float zMovement = _speed * Time.deltaTime;
 

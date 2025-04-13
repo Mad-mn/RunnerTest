@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Camera;
 using Configs;
@@ -17,6 +18,7 @@ using Gameplay.Environment;
 using Gameplay.Rewards;
 using Player;
 using Tools.Constants;
+using UI.Windows.Loader;
 using UnityEngine;
 using Zenject;
 
@@ -108,6 +110,8 @@ namespace Gameplay {
     }
 
     private async UniTask WaitStartDelay() {
+      await WaitForLoader();
+      _uiManager.HideWindow<LoaderWindow>();
       _gameplayWindow.StartTimer(_roadConfig.StartDelay);
       await UniTask.Delay(_roadConfig.StartDelay*1000, cancellationToken: destroyCancellationToken);
       _playerController.OnStartGame();
@@ -121,11 +125,23 @@ namespace Gameplay {
     }
 
     private async void ExitToLobby() {
-      _gameplayRewardHandler.Save();
-      ClearScene();
-      await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
-      _uiManager.HideWindow<GameplayWindow>();
-      _uiManager.ShowWindow<LobbyWindow>();
+      try {
+        _gameplayRewardHandler.Save();
+        _uiManager.ShowWindow<LoaderWindow>();
+        ClearScene();
+        _uiManager.HideWindow<GameplayWindow>();
+        _uiManager.ShowWindow<LobbyWindow>();
+        await WaitForLoader();
+        await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
+        _uiManager.HideWindow<LoaderWindow>();
+      }
+      catch (Exception e) {
+        Debug.LogError($"ExitToLobby error: {e}");
+      }
+    }
+
+    private async UniTask WaitForLoader() {
+      await UniTask.Delay(Other.MinimumLoaderTime*1000, cancellationToken: destroyCancellationToken);
     }
   }
 }
