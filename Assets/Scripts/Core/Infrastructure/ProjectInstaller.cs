@@ -3,6 +3,7 @@ using Core.Loaders.Scene;
 using Core.Managers.RoadEnvironment;
 using Core.Managers.UI;
 using Core.ObjectPool;
+using Core.SaveLoadDataSystem;
 using Zenject;
 
 namespace Core.Infrastructure {
@@ -14,6 +15,7 @@ namespace Core.Infrastructure {
       Container.Bind<IObjectPoolManager>().To<ObjectPoolManager>().AsSingle();
       Container.Bind<IRoadEnvironmentSpawnManager>().To<RoadEnvironmentSpawnManager>().AsSingle();
       Container.Bind<IUIManager>().To<UIManager>().AsSingle();
+      Container.Bind<IDataHandler>().To<DataHandler>().AsSingle();
     }
   }
 }
