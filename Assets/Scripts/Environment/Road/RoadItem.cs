@@ -57,6 +57,8 @@ namespace Environment.Road {
       foreach (T insideItem in list) {
         _objectPoolManager.ReturnToPool(insideItem);
       }
+
+      list.Clear();
     }
 
     public Vector3 EnterPosition { get { return _enterPosition.position; } }

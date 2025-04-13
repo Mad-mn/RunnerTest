@@ -1,5 +1,6 @@
 using System;
 using Configs.RewardConfigs;
+using Core.Managers.Input;
 using Core.ObjectPool;
 using Environment.InsideObjects.Obstacles;
 using Environment.InsideObjects.Rewards;
@@ -12,8 +13,8 @@ namespace Player {
     [SerializeField]
     private PlayerMovementController _movementController;
 
-    public void Initialize(PlayerMovementData movementData) {
-      _movementController.SetupData(movementData);
+    public void Initialize(PlayerMovementData movementData, IInputHandler inputHandler) {
+      _movementController.SetupData(movementData, inputHandler);
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -27,6 +28,10 @@ namespace Player {
         _movementController.Stop();
         OnCollideWithObstacle?.Invoke();
       }
+    }
+
+    public void OnStartGame() {
+      _movementController.StartRun();
     }
 
     public void Initialize() {

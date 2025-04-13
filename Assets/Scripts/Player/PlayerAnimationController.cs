@@ -9,5 +9,9 @@ namespace Player {
     public void StartRunAnimation() {
       _animator.SetBool(AnimationNames.PlayerRun, true);
     }
+
+    public void PlayIdleAnimation() {
+      _animator.SetBool(AnimationNames.PlayerRun, false);
+    }
   }
 }
