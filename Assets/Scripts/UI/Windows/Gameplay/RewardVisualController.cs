@@ -20,14 +20,13 @@ namespace UI.Windows.Gameplay {
       InitComponents();
     }
 
-    private void Start() {
-      SetTotalPointTxt();
-    }
-
     public void SetToDefault() {
       foreach (RewardCountItem item in _rewardCountItems) {
         item.SetToDefault();
       }
+
+      _totalPoint = 0;
+      SetTotalPointTxt();
     }
 
     public void OnPlayerCatchReward(RewardType rewardType) {

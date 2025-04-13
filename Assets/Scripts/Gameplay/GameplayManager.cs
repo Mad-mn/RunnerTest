@@ -2,21 +2,23 @@ using System.Collections.Generic;
 using Camera;
 using Configs;
 using Configs.PlayerConfigs;
+using Configs.RewardConfigs;
 using Configs.RoadConfigs;
 using Core.Loaders.Scene;
 using Core.Managers.UI;
 using Core.ObjectPool;
 using Core.SaveLoadDataSystem;
-using Core.SaveLoadDataSystem.SavedData;
 using Core.Views.Gameplay;
 using Core.Views.Lobby;
 using Environment.Road;
+using Gameplay.Environment;
+using Gameplay.Rewards;
 using Player;
 using Tools.Constants;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Environment {
+namespace Gameplay {
   public class GameplayManager : MonoBehaviour {
     [SerializeField]
     private Transform _playerSpawnPoint;
@@ -35,52 +37,31 @@ namespace Gameplay.Environment {
     private PlayerConfigData _playerConfig;
     private RoadConfigData _roadConfig;
 
-    private RoadCreator _roadCreator;
+    private IEnvironmentManager _environmentManager;
+    private IGameplayRewardHandler _gameplayRewardHandler;
+
     private List<RoadItem> _roadItems;
     private PlayerController _playerController;
     private GameplayWindow _gameplayWindow;
 
     private void Awake() {
       InitializeComponents();
+      CreateManagers();
     }
 
-    private async void Start() {
-      InitializeStartedEnvironment();
+    private void CreateManagers() {
+      _environmentManager = new EnvironmentManager(_objectPoolManager, _roadRoot, _startRoadSpawnPoint);
+      _gameplayRewardHandler = new GameplayRewardHandler(_dataHandler, _configManager.GetConfig<RewardConfig>());
+    }
+
+    private void Start() {
+      _environmentManager.InitializeStartedEnvironment(_roadConfig.StartAmount);
       SpawnPlayer();
       AddListeners();
-      Debug.LogError(_dataHandler.GetData<PlayerData>().GetListOfGames().Count);
     }
 
     private void OnDestroy() {
       RemoveListeners();
-    }
-
-    private void InitializeStartedEnvironment() {
-      _roadItems = new List<RoadItem>();
-      int startAmount = _configManager.GetConfig<RoadConfig>().RoadConfigData.StartAmount;
-      for (int i = 0; i < startAmount; i++) {
-        RoadItem newRoad = _roadCreator.SpawnRoadItem(i == 0 ? _startRoadSpawnPoint.position : _roadItems[^1].ExitPosition);
-        newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
-        newRoad.SetupEnvironment(i != 0);
-        _roadItems.Add(newRoad);
-      }
-    }
-
-    private void OnPlayerEnterInNewRoadItem(RoadItem enteredRoad) {
-      if (enteredRoad != _roadItems[0]) {
-        UpdateRoad();
-      }
-    }
-
-    private void UpdateRoad() {
-      RoadItem oldRoad = _roadItems[0];
-      oldRoad.OnPlayerEnter -= OnPlayerEnterInNewRoadItem;
-      _roadItems.RemoveAt(0);
-      _objectPoolManager.ReturnToPool(oldRoad);
-      RoadItem newRoad = _roadCreator.SpawnRoadItem( _roadItems[^1].ExitPosition);
-      newRoad.OnPlayerEnter += OnPlayerEnterInNewRoadItem;
-      newRoad.SetupEnvironment(true);
-      _roadItems.Add(newRoad);
     }
 
     private void SpawnPlayer() {
@@ -96,10 +77,7 @@ namespace Gameplay.Environment {
     }
 
     private void ClearScene() {
-      foreach (RoadItem roadItem in _roadItems) {
-        roadItem.OnPlayerEnter -= OnPlayerEnterInNewRoadItem;
-        _objectPoolManager.ReturnToPool(roadItem);
-      }
+      _environmentManager.Clear();
 
       _playerController.transform.position = _playerSpawnPoint.position;
       _objectPoolManager.ReturnToPool(_playerController);
@@ -115,24 +93,24 @@ namespace Gameplay.Environment {
       _dataHandler = container.Resolve<IDataHandler>();
       _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
       _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
-      _roadCreator = new RoadCreator(_objectPoolManager, _roadRoot);
     }
 
     private void AddListeners() {
       _playerController.OnCatchReward += _gameplayWindow.OnPlayerCatchReward;
+      _playerController.OnCatchReward += _gameplayRewardHandler.IncreaseRewards;
       _playerController.OnCollideWithObstacle += _gameplayWindow.OnPlayerCollideWithObstacle;
       _gameplayWindow.OnExit += ExitToLobby;
     }
 
     private void RemoveListeners() {
       _playerController.OnCatchReward -= _gameplayWindow.OnPlayerCatchReward;
+      _playerController.OnCatchReward -= _gameplayRewardHandler.IncreaseRewards;
       _playerController.OnCollideWithObstacle -= _gameplayWindow.OnPlayerCollideWithObstacle;
       _gameplayWindow.OnExit -= ExitToLobby;
     }
 
     private async void ExitToLobby() {
-      _dataHandler.GetData<PlayerData>().SetupNewResult(10);
-      _dataHandler.Save();
+      _gameplayRewardHandler.Save();
       ClearScene();
       await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
       _uiManager.HideWindow<GameplayWindow>();

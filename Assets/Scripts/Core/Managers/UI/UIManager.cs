@@ -58,6 +58,7 @@ namespace Core.Managers.UI {
         GameObject windowPrefab = await uiAssetReference.LoadAssetAsync<GameObject>();
         GameObject windowObj = Object.Instantiate(windowPrefab, _uiRoot.transform);
         BaseUIWindow window = windowObj.GetComponent<BaseUIWindow>();
+        await window.Initialize();
         window.Hide();
         _windows.Add(window);
       }

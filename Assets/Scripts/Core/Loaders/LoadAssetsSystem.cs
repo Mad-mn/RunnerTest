@@ -28,10 +28,10 @@ namespace Core.Loaders {
     }
 
     private async UniTask InitializeItems() {
+      _dataHandler.Initialize();
       await _configManager.Initialize();
       await _poolManager.Initialize();
       await _uiManager.Initialize();
-      _dataHandler.Initialize();
     }
 
     private async void OnLoadComplete() {

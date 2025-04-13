@@ -1,5 +1,6 @@
 using System;
 using Configs.RewardConfigs;
+using Cysharp.Threading.Tasks;
 using UI.Windows;
 using UI.Windows.Gameplay;
 using UnityEngine;
@@ -44,5 +45,8 @@ namespace Core.Views.Gameplay {
       OnExit?.Invoke();
     }
 
+    public override UniTask Initialize() {
+      return UniTask.CompletedTask;
+    }
   }
 }

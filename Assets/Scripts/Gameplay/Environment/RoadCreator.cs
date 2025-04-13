@@ -3,7 +3,7 @@ using Environment.Road;
 using UnityEngine;
 
 namespace Gameplay.Environment {
-  public class RoadCreator {
+  public class RoadCreator : IRoadCreator {
     private readonly IObjectPoolManager _objectPoolManager;
     private readonly Transform _roadRoot;
 
