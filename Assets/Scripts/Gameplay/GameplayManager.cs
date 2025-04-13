@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Camera;
 using Configs;
@@ -5,16 +6,19 @@ using Configs.PlayerConfigs;
 using Configs.RewardConfigs;
 using Configs.RoadConfigs;
 using Core.Loaders.Scene;
+using Core.Managers.Input;
 using Core.Managers.UI;
 using Core.ObjectPool;
 using Core.SaveLoadDataSystem;
 using Core.Views.Gameplay;
 using Core.Views.Lobby;
+using Cysharp.Threading.Tasks;
 using Environment.Road;
 using Gameplay.Environment;
 using Gameplay.Rewards;
 using Player;
 using Tools.Constants;
+using UI.Windows.Loader;
 using UnityEngine;
 using Zenject;
 
@@ -34,6 +38,7 @@ namespace Gameplay {
     private ISceneLoader _sceneLoader;
     private IUIManager _uiManager;
     private IDataHandler _dataHandler;
+    private IInputHandler _inputHandler;
     private PlayerConfigData _playerConfig;
     private RoadConfigData _roadConfig;
 
@@ -54,10 +59,11 @@ namespace Gameplay {
       _gameplayRewardHandler = new GameplayRewardHandler(_dataHandler, _configManager.GetConfig<RewardConfig>());
     }
 
-    private void Start() {
+    private async void Start() {
       _environmentManager.InitializeStartedEnvironment(_roadConfig.StartAmount);
       SpawnPlayer();
       AddListeners();
+      await WaitStartDelay();
     }
 
     private void OnDestroy() {
@@ -70,7 +76,7 @@ namespace Gameplay {
         ChangeSideSpeed = _playerConfig.ChangeSideSpeed,
         Speed = _playerConfig.RunSpeed,
         SideWight = _roadConfig.SideWight
-      });
+      }, _inputHandler);
       _playerController.transform.position = _playerSpawnPoint.position;
       _playerController.transform.SetParent(_playerSpawnPoint);
       _cameraController.SetupTarget(_playerController.transform, _playerConfig.CameraOffset);
@@ -91,6 +97,7 @@ namespace Gameplay {
       _objectPoolManager = container.Resolve<IObjectPoolManager>();
       _configManager = container.Resolve<IConfigManager>();
       _dataHandler = container.Resolve<IDataHandler>();
+      _inputHandler = container.Resolve<IInputHandler>();
       _playerConfig = _configManager.GetConfig<PlayerConfig>().ConfigData;
       _roadConfig = _configManager.GetConfig<RoadConfig>().RoadConfigData;
     }
@@ -102,6 +109,14 @@ namespace Gameplay {
       _gameplayWindow.OnExit += ExitToLobby;
     }
 
+    private async UniTask WaitStartDelay() {
+      await WaitForLoader();
+      _uiManager.HideWindow<LoaderWindow>();
+      _gameplayWindow.StartTimer(_roadConfig.StartDelay);
+      await UniTask.Delay(_roadConfig.StartDelay*1000, cancellationToken: destroyCancellationToken);
+      _playerController.OnStartGame();
+    }
+
     private void RemoveListeners() {
       _playerController.OnCatchReward -= _gameplayWindow.OnPlayerCatchReward;
       _playerController.OnCatchReward -= _gameplayRewardHandler.IncreaseRewards;
@@ -110,11 +125,23 @@ namespace Gameplay {
     }
 
     private async void ExitToLobby() {
-      _gameplayRewardHandler.Save();
-      ClearScene();
-      await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
-      _uiManager.HideWindow<GameplayWindow>();
-      _uiManager.ShowWindow<LobbyWindow>();
+      try {
+        _gameplayRewardHandler.Save();
+        _uiManager.ShowWindow<LoaderWindow>();
+        ClearScene();
+        _uiManager.HideWindow<GameplayWindow>();
+        _uiManager.ShowWindow<LobbyWindow>();
+        await WaitForLoader();
+        await _sceneLoader.LoadSceneAsync(SceneNameConstants.LobbySceneKey);
+        _uiManager.HideWindow<LoaderWindow>();
+      }
+      catch (Exception e) {
+        Debug.LogError($"ExitToLobby error: {e}");
+      }
+    }
+
+    private async UniTask WaitForLoader() {
+      await UniTask.Delay(Other.MinimumLoaderTime*1000, cancellationToken: destroyCancellationToken);
     }
   }
 }

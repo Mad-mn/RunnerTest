@@ -33,3 +33,4 @@ MonoBehaviour:
     - {fileID: -6195160868496707624, guid: b08e7dba024395c49ac3f69b0e1b8a6a, type: 3}
     SideWight: 3
     SideAmount: 3
+    StartDelay: 3

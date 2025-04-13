@@ -6,6 +6,7 @@ using Core.Views.Gameplay;
 using Cysharp.Threading.Tasks;
 using Tools.Constants;
 using UI.Windows;
+using UI.Windows.Loader;
 using UI.Windows.Lobby;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,6 +45,7 @@ namespace Core.Views.Lobby {
     }
 
     private void OnPlayButton() {
+      _uiManager.ShowWindow<LoaderWindow>();
       LoadPlayScene().Forget();
       _uiManager.HideWindow<LobbyWindow>();
       _uiManager.ShowWindow<GameplayWindow>();

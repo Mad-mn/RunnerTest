@@ -7,6 +7,7 @@ namespace Core.EntryPoint {
   public class GlobalInitializer : MonoBehaviour {
 
     private void Start() {
+      Application.targetFrameRate = 60;
       EnterInGame();
     }
 

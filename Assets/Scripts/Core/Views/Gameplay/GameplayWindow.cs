@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using Configs.RewardConfigs;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UI.Windows;
 using UI.Windows.Gameplay;
 using UnityEngine;
@@ -15,6 +17,10 @@ namespace Core.Views.Gameplay {
     private GameoverPanelController _gameoverPanel;
     [SerializeField]
     private Button _exitButton;
+    [SerializeField]
+    private TMP_Text _timerTxt;
+
+    private Coroutine _timerRoutine;
 
     private void OnEnable() {
       _rewardVisualController.SetToDefault();
@@ -23,6 +29,12 @@ namespace Core.Views.Gameplay {
 
     private void OnDisable() {
       RemoveListeners();
+      if (_timerRoutine == null) {
+        return;
+      }
+
+      StopCoroutine(_timerRoutine);
+      _timerRoutine = null;
     }
 
     public void OnPlayerCatchReward(RewardType rewardType) {
@@ -31,6 +43,22 @@ namespace Core.Views.Gameplay {
 
     public void OnPlayerCollideWithObstacle() {
       _gameoverPanel.GameOver();
+    }
+
+    public void StartTimer(int seconds) {
+      _timerRoutine = StartCoroutine(TimerRoutine(seconds));
+    }
+
+    private IEnumerator TimerRoutine(int seconds) {
+      _timerTxt.gameObject.SetActive(true);
+      WaitForSeconds second = new WaitForSeconds(1);
+      while (seconds > 0) {
+        _timerTxt.text = seconds.ToString();
+        yield return second;
+        seconds--;
+      }
+
+      _timerTxt.gameObject.SetActive(false);
     }
 
     private void AddListeners() {

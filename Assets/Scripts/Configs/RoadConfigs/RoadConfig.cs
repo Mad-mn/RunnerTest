@@ -37,5 +37,6 @@ namespace Configs.RoadConfigs {
     public List<BaseInsideItem> RewardItems;
     public int SideWight;
     public int SideAmount;
+    public int StartDelay;
   }
 }
