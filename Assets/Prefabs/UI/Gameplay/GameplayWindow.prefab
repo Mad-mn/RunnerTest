@@ -696,6 +696,7 @@ MonoBehaviour:
   - {fileID: 4827577442832831235}
   - {fileID: 6744318666626391157}
   - {fileID: 1448578770584180474}
+  _totalPointTxt: {fileID: 1628706151120112161}
 --- !u!114 &4851825573343735313
 MonoBehaviour:
   m_ObjectHideFlags: 0
