@@ -18,16 +18,11 @@ namespace Player {
     }
 
     private void OnTriggerEnter(Collider other) {
-      if (other.TryGetComponent(out IReward reward)) {
-        OnCatchReward?.Invoke(reward.RewardType);
-        reward.OnCatch();
+      if (CheckRewardTrigger(other)) {
         return;
       }
 
-      if (other.TryGetComponent(out BaseObstacle obstacle)) {
-        _movementController.Stop();
-        OnCollideWithObstacle?.Invoke();
-      }
+      CheckObstacleTrigger(other);
     }
 
     public void OnStartGame() {
@@ -46,6 +41,23 @@ namespace Player {
     public void ReturnToPool() {
       gameObject.SetActive(false);
       InPool = true;
+    }
+
+    private bool CheckRewardTrigger(Collider col) {
+      if (col.TryGetComponent(out IReward reward)) {
+        OnCatchReward?.Invoke(reward.RewardType);
+        reward.OnCatch();
+        return true;
+      }
+
+      return false;
+    }
+
+    private void CheckObstacleTrigger(Collider col) {
+      if (col.TryGetComponent(out BaseObstacle obstacle)) {
+        _movementController.Stop();
+        OnCollideWithObstacle?.Invoke();
+      }
     }
 
     public bool InPool {

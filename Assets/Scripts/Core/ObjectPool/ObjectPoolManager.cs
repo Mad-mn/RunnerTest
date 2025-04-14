@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Configs;
 using Configs.PoolConfigs;
+using Core.Loaders.AssetLoaders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Core.ObjectPool {
-  public class ObjectPoolManager : IObjectPoolManager {
+  public class ObjectPoolManager : IObjectPoolManager, IAssetLoader {
 
     private readonly IConfigManager _configManager;
     private List<PoolItem> _objectsPool;
@@ -26,6 +27,10 @@ namespace Core.ObjectPool {
       _poolContainer = new GameObject(nameof(_poolContainer)).transform;
       Object.DontDestroyOnLoad(_poolContainer.gameObject);
       await InitializeItems();
+    }
+
+    public int LoadAssetOrder {
+      get { return 3; }
     }
 
     public T GetFromPool<T>() where T : MonoBehaviour, IPoolable {

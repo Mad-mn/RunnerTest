@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Configs;
 using Configs.RewardConfigs;
 using TMPro;
+using Tools.Constants;
 using UnityEngine;
 using Zenject;
 
@@ -42,7 +43,7 @@ namespace UI.Windows.Gameplay {
     }
 
     private void SetTotalPointTxt() {
-      _totalPointTxt.text = $"Total: {_totalPoint}";
+      _totalPointTxt.text = $"{UIConstants.Total} {_totalPoint}";
     }
 
     private void InitComponents() {

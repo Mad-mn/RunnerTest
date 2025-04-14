@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Configs;
 using Configs.UIConfigs;
+using Core.Loaders.AssetLoaders;
 using Cysharp.Threading.Tasks;
 using UI.Windows;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Core.Managers.UI {
-  public class UIManager : IUIManager {
+  public class UIManager : IUIManager, IAssetLoader {
 
     private readonly IConfigManager _configManager;
     private UIConfig _uiConfig;
@@ -23,6 +24,10 @@ namespace Core.Managers.UI {
       _uiConfig = _configManager.GetConfig<UIConfig>();
       await CreateRoot();
       await InitializeWindows();
+    }
+
+    public int LoadAssetOrder {
+      get { return 4; }
     }
 
     public T GetWindow<T>() where T : BaseUIWindow {

@@ -18,19 +18,18 @@ namespace Core.Infrastructure {
     }
 
     private void BindLoaders() {
+      Container.BindInterfacesAndSelfTo<ConfigManager>().AsSingle();
+      Container.BindInterfacesAndSelfTo<UIManager>().AsSingle();
+      Container.BindInterfacesAndSelfTo<ObjectPoolManager>().AsSingle();
+      Container.BindInterfacesAndSelfTo<DataHandler>().AsSingle();
       Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
     }
 
     private void BindManagers() {
-      Container.Bind<ConfigManager>().AsSingle();
-      Container.Bind<IConfigManager>().To<ConfigManager>().FromResolve();
-      Container.Bind<IObjectPoolManager>().To<ObjectPoolManager>().AsSingle();
       Container.Bind<IRoadEnvironmentSpawnManager>().To<RoadEnvironmentSpawnManager>().AsSingle();
-      Container.Bind<IUIManager>().To<UIManager>().AsSingle();
     }
 
     private void BindHandlers() {
-      Container.Bind<IDataHandler>().To<DataHandler>().AsSingle();
       Container.Bind<IInputHandler>().To<InputHandler>().AsSingle();
     }
   }

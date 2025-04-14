@@ -1,4 +1,5 @@
 using TMPro;
+using Tools.Constants;
 using UnityEngine;
 
 namespace UI.Windows.Lobby {
@@ -9,7 +10,7 @@ namespace UI.Windows.Lobby {
     private TMP_Text _scoreAmount;
 
     public void SetupData(int gameNumber, int score) {
-      _gameNumber.text = $"Game #{gameNumber}";
+      _gameNumber.text = $"{UIConstants.Game}{gameNumber}";
       _scoreAmount.text = score.ToString();
     }
   }

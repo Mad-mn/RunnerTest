@@ -1,8 +1,8 @@
-using Configs;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Loaders.AssetLoaders;
 using Core.Loaders.Scene;
 using Core.Managers.UI;
-using Core.ObjectPool;
-using Core.SaveLoadDataSystem;
 using Core.Views.Lobby;
 using Cysharp.Threading.Tasks;
 using Tools.Constants;
@@ -14,13 +14,9 @@ namespace Core.Loaders {
     [Inject]
     private ISceneLoader _sceneLoader;
     [Inject]
-    private ConfigManager _configManager;
-    [Inject]
-    private IObjectPoolManager _poolManager;
-    [Inject]
     private IUIManager _uiManager;
     [Inject]
-    private IDataHandler _dataHandler;
+    private List<IAssetLoader> _assetLoaders;
 
     private async void Start() {
       await InitializeItems();
@@ -29,10 +25,10 @@ namespace Core.Loaders {
 
     private async UniTask InitializeItems() {
       float startTime = Time.time;
-      _dataHandler.Initialize();
-      await _configManager.Initialize();
-      await _poolManager.Initialize();
-      await _uiManager.Initialize();
+      foreach (IAssetLoader assetLoader in _assetLoaders.OrderBy(x => x.LoadAssetOrder)) {
+        await assetLoader.Initialize();
+      }
+
       float loadTime = Time.time - startTime;
       float timeToDelay = Other.MinimumLoaderTime - loadTime;
       if (timeToDelay < 0) {

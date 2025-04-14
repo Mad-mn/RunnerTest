@@ -1,5 +1,6 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Tools.Constants;
 using UnityEngine;
 
 namespace Core.SaveLoadDataSystem {
@@ -7,7 +8,7 @@ namespace Core.SaveLoadDataSystem {
     private readonly string _filePath;
 
     public BinarySaveSystem() {
-      _filePath = Path.Combine(Application.persistentDataPath, "Save.dat");
+      _filePath = Path.Combine(Application.persistentDataPath, Other.SaveDatFileName);
     }
 
     public void Save(SaveData data) {
