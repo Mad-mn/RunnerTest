@@ -29,7 +29,7 @@ namespace Configs.RoadConfigs {
     public float SpawnObstacleChanceMax;
     [Range(0, 1)]
     public float SpawnObstacleChanceMin;
-    public BaseInsideItem Obstacle;
+    public List<BaseInsideItem> Obstacles;
     [Range(0, 1)]
     public float SpawnRewardChanceMax;
     [Range(0, 1)]

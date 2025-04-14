@@ -46,7 +46,8 @@ namespace Core.Managers.RoadEnvironment {
       takenPositions = new Vector3[spawnAmount];
 
       for (int i = 0; i < spawnAmount; i++) {
-        BaseInsideItem item = SpawnItem(_roadConfigData.Obstacle, root, insidePositions, takenPositions, i);
+        BaseInsideItem randomItem = GetRandomSpawnObstacleItem();
+        BaseInsideItem item = SpawnItem(randomItem, root, insidePositions, takenPositions, i);
         spawnedItems.Add(item);
       }
 
@@ -94,6 +95,10 @@ namespace Core.Managers.RoadEnvironment {
 
     private BaseInsideItem GetRandomSpawnRewardItem() {
       return _roadConfigData.RewardItems[Random.Range(0, _roadConfigData.RewardItems.Count)];
+    }
+
+    private BaseInsideItem GetRandomSpawnObstacleItem() {
+      return _roadConfigData.Obstacles[Random.Range(0, _roadConfigData.Obstacles.Count)];
     }
 
     private Vector3 GetRandomSpawnPosition(List<Transform> outsidePositions, Vector3[] positions) {

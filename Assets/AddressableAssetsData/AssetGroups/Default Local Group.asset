@@ -117,6 +117,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a6a7eec74fdada468a4a4697135a169
+    m_Address: Prefabs/Environment/Obstacles/ObstacleBarrel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 83607aee0e6283e45aa26ab4aa0478de, type: 2}
   m_SchemaSet:
