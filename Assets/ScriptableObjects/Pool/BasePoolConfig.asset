@@ -72,10 +72,16 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-    SpawnAmount: 30
+    SpawnAmount: 15
   - AssetReference:
       m_AssetGUID: c38ea7360bb6b4c41871836dec88edac
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     SpawnAmount: 1
+  - AssetReference:
+      m_AssetGUID: 1a6a7eec74fdada468a4a4697135a169
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+    SpawnAmount: 15

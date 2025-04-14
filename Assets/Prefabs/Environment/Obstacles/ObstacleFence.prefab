@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1580118368510529360}
-  - component: {fileID: -7433744346076918379}
   - component: {fileID: 2066220529599357993}
+  - component: {fileID: -5598590461725922037}
   m_Layer: 0
-  m_Name: Obstacle
+  m_Name: ObstacleFence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,18 +34,6 @@ Transform:
   - {fileID: 2278943908278787018}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7433744346076918379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2460635049563326503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 386ccd05efb78ad4b841aea904ff1449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &2066220529599357993
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67,6 +55,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.3129315, y: 1.3288966, z: 0.33762157}
   m_Center: {x: -0.004066944, y: 0.6644483, z: 0.0038699806}
+--- !u!114 &-5598590461725922037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2460635049563326503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe929ecc9a777a43ae1b613e50c7f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2278943908278331876
 PrefabInstance:
   m_ObjectHideFlags: 0

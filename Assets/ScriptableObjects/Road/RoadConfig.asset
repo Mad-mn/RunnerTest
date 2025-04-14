@@ -24,7 +24,9 @@ MonoBehaviour:
     - {fileID: -7848644237381767519, guid: e4d4a7b02f6ddc34d8d3dfe6dbf0eb2b, type: 3}
     SpawnObstacleChanceMax: 0.5
     SpawnObstacleChanceMin: 0.1
-    Obstacle: {fileID: -7433744346076918379, guid: c40453d00513d574b86198b76945957b, type: 3}
+    Obstacles:
+    - {fileID: 7920493891374135028, guid: 1a6a7eec74fdada468a4a4697135a169, type: 3}
+    - {fileID: -5598590461725922037, guid: c40453d00513d574b86198b76945957b, type: 3}
     SpawnRewardChanceMax: 0.5
     SpawnRewardChanceMin: 0.1
     RewardItems:
